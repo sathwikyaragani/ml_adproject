@@ -1,0 +1,16 @@
+my_list = [10, 20, 30, 40, 50]
+print(my_list[0])  
+print(my_list[2]) 
+print(my_list[-1])
+
+
+my_tuple = ('apple', 'banana', 'cherry', 'date', 'elderberry')
+print(my_tuple[1])  
+print(my_tuple[4])  
+print(my_tuple[-2]) 
+
+
+my_dict = {'name': 'Alice', 'age': 25, 'city': 'New York', 'job': 'Engineer', 'country': 'USA'}
+print(my_dict['name'])   
+print(my_dict['city'])   
+print(my_dict.get('job')) 
