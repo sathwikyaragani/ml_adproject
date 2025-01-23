@@ -1,0 +1,62 @@
+import pandas as pd
+data = {
+    'Date': ['2023-01-19', '2023-01-16', '2023-01-10', '2023-01-18', '2023-01-14', '2023-01-06',
+             '2023-01-04', '2023-01-09', '2023-01-20', '2023-01-11', '2023-01-13', '2023-01-08',
+             '2023-01-15', '2023-01-05', '2023-01-01', '2023-01-03', '2023-01-02', '2023-01-07',
+             '2023-01-12', '2023-01-17'],
+    'Account_Type': ['Fixed Deposit', 'Current', 'Current', 'Savings', 'Recurring Deposit', 'Current',
+                     'Recurring Deposit', 'Current', 'Recurring Deposit', 'Fixed Deposit', 'Recurring Deposit', 'Fixed Deposit',
+                     'Fixed Deposit', 'Recurring Deposit', 'Fixed Deposit', 'Savings', 'Fixed Deposit', 'Recurring Deposit', 'Savings'],
+    'Branch': ['Central', 'Uptown', 'Uptown', 'Uptown', 'Suburban', 'Suburban', 'Central', 'Central', 'Downtown', 'Downtown',
+               'Central', 'Suburban', 'Uptown', 'Central', 'Downtown', 'Suburban', 'Central', 'Suburban', 'Central'],
+    'Transaction_Type': ['Loan Payment', 'Withdrawal', 'Loan Payment', 'Loan Payment', 'Loan Payment', 'Service Charge',
+                          'Service Charge', 'Loan Payment', 'Service Charge', 'Deposit', 'Deposit', 'Service Charge',
+                          'Service Charge', 'Service Charge', 'Withdrawal', 'Service Charge', 'Deposit', 'Loan Payment', 'Deposit'],
+    'Transaction_Amount': [985.51, 641.43, 3363.85, 1914.6, 2788.57, 4584.05, 1621.82, 2346.72, 3899.98, 1529.59,
+                           846.41, 1803.88, 1225.5, 4683.64, 4136.54, 3350.32, 4421.57, 4116.52, 1339.57, 4516.52],
+    'Account_Balance': [6839.59, 8908.39, 12428.67, 5776.63, 4779.04, 7635.47, 6465.79, 10708.85, 12646.56, 2592.16,
+                        6443.14, 6560.58, 4224.47, 6762.43, 8175.08, 12836.51, 8330.4, 9785.64, 8666.74, 8789.19]
+}
+df = pd.DataFrame(data)
+print("First 5 rows of the dataset:")
+print(df.head())
+print("\nBasic statistics of numerical columns:")
+print(df.describe())
+print("\nMissing values in the dataset:")
+print(df.isnull().sum())
+
+
+import pandas as pd
+data = {
+    'Date': ['2023-01-19', '2023-01-16', '2023-01-10', '2023-01-18', '2023-01-14', '2023-01-06',
+             '2023-01-04', '2023-01-09', '2023-01-20', '2023-01-11', '2023-01-13', '2023-01-08',
+             '2023-01-15', '2023-01-05', '2023-01-01', '2023-01-03', '2023-01-02', '2023-01-07',
+             '2023-01-12', '2023-01-17'],
+    'Account_Type': ['Fixed Deposit', 'Current', 'Current', 'Savings', 'Recurring Deposit', 'Current',
+                     'Recurring Deposit', 'Current', 'Recurring Deposit', 'Fixed Deposit', 'Recurring Deposit', 'Fixed Deposit',
+                     'Fixed Deposit', 'Recurring Deposit', 'Fixed Deposit', 'Savings', 'Fixed Deposit', 'Recurring Deposit', 'Savings'],
+    'Branch': ['Central', 'Uptown', 'Uptown', 'Uptown', 'Suburban', 'Suburban', 'Central', 'Central', 'Downtown', 'Downtown',
+               'Central', 'Suburban', 'Uptown', 'Central', 'Downtown', 'Suburban', 'Central', 'Suburban', 'Central'],
+    'Transaction_Type': ['Loan Payment', 'Withdrawal', 'Loan Payment', 'Loan Payment', 'Loan Payment', 'Service Charge',
+                          'Service Charge', 'Loan Payment', 'Service Charge', 'Deposit', 'Deposit', 'Service Charge',
+                          'Service Charge', 'Service Charge', 'Withdrawal', 'Service Charge', 'Deposit', 'Loan Payment', 'Deposit'],
+    'Transaction_Amount': [985.51, 641.43, 3363.85, 1914.6, 2788.57, 4584.05, 1621.82, 2346.72, 3899.98, 1529.59,
+                           846.41, 1803.88, 1225.5, 4683.64, 4136.54, 3350.32, 4421.57, 4116.52, 1339.57, 4516.52],
+    'Account_Balance': [6839.59, 8908.39, 12428.67, 5776.63, 4779.04, 7635.47, 6465.79, 10708.85, 12646.56, 2592.16,
+                        6443.14, 6560.58, 4224.47, 6762.43, 8175.08, 12836.51, 8330.4, 9785.64, 8666.74, 8789.19]
+}
+df = pd.DataFrame(data)
+account_group = df.groupby('Account_Type').agg(
+    total_transaction_amount=('Transaction_Amount', 'sum'),
+    average_account_balance=('Account_Balance', 'mean')
+)
+
+print("Aggregated data by Account_Type:")
+print(account_group)
+branch_group = df.groupby('Branch').agg(
+    total_transactions=('Transaction_Amount', 'count'),
+    average_transaction_amount=('Transaction_Amount', 'mean')
+)
+
+print("\nAggregated data by Branch:")
+print(branch_group)
