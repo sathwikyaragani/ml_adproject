@@ -1,0 +1,22 @@
+import pandas as pd
+
+# Data for the DataFrame
+data = {
+    'Name': ['John', 'Alice', 'Bob', 'Diana'],
+    'Age': [28, 34, 23, 29],
+    'Department': ['HR', 'IT', 'Marketing', 'Finance'],
+    'Salary': [45000, 60000, 35000, 50000]
+}
+
+# Create the DataFrame
+df = pd.DataFrame(data)
+
+# Display the DataFrame
+print(df)
+
+
+Name  Age Department  Salary
+0   John   28         HR   45000
+1  Alice   34         IT   60000
+2    Bob   23  Marketing   35000
+3  Diana   29    Finance   50000
