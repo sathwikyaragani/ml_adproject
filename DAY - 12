@@ -1,0 +1,75 @@
+import pandas as pd
+
+# Create the DataFrame from the given data
+data = {
+    'Date': ['2023-01-19', '2023-01-16', '2023-01-10', '2023-01-18', '2023-01-14', '2023-01-06', '2023-01-04', '2023-01-09', 
+             '2023-01-20', '2023-01-11', '2023-01-13', '2023-01-08', '2023-01-15', '2023-01-05', '2023-01-01', '2023-01-03', 
+             '2023-01-02', '2023-01-07', '2023-01-12', '2023-01-17'],
+    'Account_Type': ['Fixed Deposit', 'Current', 'Current', 'Savings', 'Recurring Deposit', 'Current', 'Recurring Deposit', 'Current', 
+                     'Recurring Deposit', 'Fixed Deposit', 'Recurring Deposit', 'Fixed Deposit', 'Fixed Deposit', 'Recurring Deposit', 
+                     'Fixed Deposit', 'Savings', 'Fixed Deposit', 'Current', 'Recurring Deposit', 'Savings'],
+    'Branch': ['Central', 'Uptown', 'Uptown', 'Uptown', 'Suburban', 'Suburban', 'Central', 'Central', 'Downtown', 'Downtown', 
+               'Central', 'Suburban', 'Suburban', 'Uptown', 'Central', 'Suburban', 'Downtown', 'Central', 'Suburban', 'Central'],
+    'Transaction_Type': ['Loan Payment', 'Withdrawal', 'Loan Payment', 'Loan Payment', 'Loan Payment', 'Service Charge', 'Service Charge', 
+                         'Loan Payment', 'Service Charge', 'Deposit', 'Deposit', 'Service Charge', 'Service Charge', 'Service Charge', 
+                         'Withdrawal', 'Service Charge', 'Deposit', 'Loan Payment', 'Service Charge', 'Deposit'],
+    'Transaction_Amount': [985.51, 641.43, 3363.85, 1914.6, 2788.57, 4584.05, 1621.82, 2346.72, 3899.98, 1529.59, 846.41, 1803.88, 
+                           1225.5, 4683.64, 4136.54, 3350.32, 4421.57, 4116.52, 1339.57, 4516.52],
+    'Account_Balance': [6839.59, 8908.39, 12428.67, 5776.63, 4779.04, 7635.47, 6465.79, 10708.85, 12646.56, 2592.16, 6443.14, 
+                        6560.58, 4224.47, 6762.43, 8175.08, 12836.51, 8330.4, 9785.64, 8666.74, 8789.19]
+}
+
+df = pd.DataFrame(data)
+
+# Sort the dataset by Account_Balance in descending order
+df_sorted = df.sort_values(by='Account_Balance', ascending=False)
+
+# Display the first 10 rows of the sorted dataframe
+print("Top 10 rows sorted by Account_Balance:")
+print(df_sorted.head(10))
+
+# Create a ranking column for Transaction_Amount within each Branch
+df_sorted['Transaction_Rank'] = df_sorted.groupby('Branch')['Transaction_Amount'].rank(ascending=False)
+
+# Display the dataframe with the ranking
+print("\nData with Transaction Ranks within each Branch:")
+print(df_sorted[['Date', 'Branch', 'Transaction_Amount', 'Transaction_Rank']].head(10))
+
+
+Top 10 rows sorted by Account_Balance:
+          Date       Account_Type    Branch Transaction_Type  \
+15  2023-01-03            Savings  Suburban   Service Charge   
+8   2023-01-20  Recurring Deposit  Downtown   Service Charge   
+2   2023-01-10            Current    Uptown     Loan Payment   
+7   2023-01-09            Current   Central     Loan Payment   
+17  2023-01-07            Current   Central     Loan Payment   
+1   2023-01-16            Current    Uptown       Withdrawal   
+19  2023-01-17            Savings   Central          Deposit   
+18  2023-01-12  Recurring Deposit  Suburban   Service Charge   
+16  2023-01-02      Fixed Deposit  Downtown          Deposit   
+14  2023-01-01      Fixed Deposit   Central       Withdrawal   
+
+    Transaction_Amount  Account_Balance  
+15             3350.32         12836.51  
+8              3899.98         12646.56  
+2              3363.85         12428.67  
+7              2346.72         10708.85  
+17             4116.52          9785.64  
+1               641.43          8908.39  
+19             4516.52          8789.19  
+18             1339.57          8666.74  
+16             4421.57          8330.40  
+14             4136.54          8175.08  
+
+Data with Transaction Ranks within each Branch:
+          Date    Branch  Transaction_Amount  Transaction_Rank
+15  2023-01-03  Suburban             3350.32               2.0
+8   2023-01-20  Downtown             3899.98               2.0
+2   2023-01-10    Uptown             3363.85               2.0
+7   2023-01-09   Central             2346.72               4.0
+17  2023-01-07   Central             4116.52               3.0
+1   2023-01-16    Uptown              641.43               4.0
+19  2023-01-17   Central             4516.52               1.0
+18  2023-01-12  Suburban             1339.57               5.0
+16  2023-01-02  Downtown             4421.57               1.0
+14  2023-01-01   Central             4136.54               2.0
